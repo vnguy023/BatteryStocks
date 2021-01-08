@@ -1,5 +1,5 @@
-import yfinance as yf
+import stockinfo.stockinfo as si
 
-tslaData = yf.Ticker('TSLA')
+ticker = 'TSLA'
 
-print(tslaData.info)
+print( si.getLiveData(ticker) )
