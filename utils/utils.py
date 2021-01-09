@@ -11,7 +11,11 @@ os.makedirs(TEMP_PATH, exist_ok=True)
 def getLastUpdateEpochTime():
     if ( not( os.path.isdir(TEMP_PATH) and os.path.isfile(TEMP_EPOCH_FILE_PATH))):
         return 0
-    return 100
+
+    epochFile = open(TEMP_EPOCH_FILE_PATH)
+    epochTime = epochFile.read()
+    
+    return int(epochTime)
 
 def setLastUpdateEpochTime(value):
     epochFile = open(TEMP_EPOCH_FILE_PATH, "w")

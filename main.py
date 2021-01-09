@@ -1,18 +1,40 @@
+import sys
+
 import stockinfo.stockinfo as si
 from datetime import datetime
 import utils.utils as utils
 
-currentTime = datetime.now()
-currentEpoch = int(currentTime.timestamp())
+def main(portfolioJson):
+    currentTime = datetime.now()
+    currentEpoch = int(currentTime.timestamp())
+    
+    print( "Current Time:\t", currentTime.strftime("%Y-%m-%d %H:%M") )
+    print( "Current Epoch:\t", currentEpoch)
 
-print( "Current Time", currentTime.strftime("%Y-%m-%d %H:%M") )
-print( "CurrentEpoch: ", currentEpoch)
+    lastEpoch = utils.getLastUpdateEpochTime()
 
+    print( "Last Epoch:\t", lastEpoch)
 
-lastEpoch = utils.getLastUpdateEpochTime()
+    print("***********************************")
 
-ticker = 'TSLA'
+    UPDATE_DATA = False
 
-print( si.getLiveData(ticker) )
+    if UPDATE_DATA:
+        print("===Updating Data===")
+        ticker = 'TSLA'
 
-utils.setLastUpdateEpochTime(currentEpoch)
+        print( si.getLiveData(ticker) )
+
+        utils.setLastUpdateEpochTime(currentEpoch)
+    else:
+        print("===Using Cached Data===")
+
+numArgs = len(sys.argv) - 1
+
+# This parses arugments to make sure it's valid
+if numArgs == 1:
+    main(sys.argv[1])
+else:
+    print("Improper Usage: Format <portfolio>")
+    print("Ex: py3 main.py sample.portfolio")
+    exit()
