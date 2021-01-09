@@ -1,3 +1,5 @@
+import utils.utils as utils
+
 class Ledger:
     def __init__(self, ticker: str, shares: float, pricePerShare: float):
         self.ticker = ticker
@@ -12,6 +14,13 @@ class Ledger:
 
         return Ledger(ticker, shares, pricePerShare)
 
+    def getCostBasis(self):
+        return self.shares * self.pricePerShare
+
     def print(self, prependStr:str):
-        output = prependStr + "[Share="+ str(self.shares).rjust(8, ' ') + "] [PricePerShare=" + str(self.pricePerShare).rjust(8, ' ') + "]"
+        costBasis = utils.getStrOutput("CostBasis", str(self.getCostBasis()), 12, ' ')
+        shares = utils.getStrOutput("Shares", str(self.shares), 8, ' ')
+        pricePerShare = utils.getStrOutput("PricePerShare", str(self.pricePerShare), 8, ' ')
+        
+        output = prependStr + shares + " " + pricePerShare + " " + costBasis
         print(output)

@@ -32,3 +32,7 @@ def getFileData(filePath:str):
     data = file.read()
 
     return data
+
+def getStrOutput(key:str, value:str, rJustWidth: int, fillChar: str):
+    output = "[{key}:{value}]".format(key=key, value=value.rjust(rJustWidth, fillChar))
+    return output
