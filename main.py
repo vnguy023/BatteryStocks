@@ -1,4 +1,6 @@
-import sys
+import json, os, sys
+
+from portfolio.portfolio import Portfolio
 
 import stockinfo.stockinfo as si
 from datetime import datetime
@@ -6,7 +8,7 @@ import utils.utils as utils
 
 MINUTES_TO_SECONDS = 60
 
-def main(portfolioJson, updateCacheAfterMinutes):
+def main(portfolioJsonFilePath, updateCacheAfterMinutes):
     currentTime = datetime.now()
     currentEpoch = int(currentTime.timestamp())
     lastEpoch = utils.getLastUpdateEpochTime()
@@ -23,6 +25,18 @@ def main(portfolioJson, updateCacheAfterMinutes):
         utils.setLastUpdateEpochTime(currentEpoch)
     else:
         print("===Using Cached Data===")
+
+
+    portfoliosJson = json.loads(utils.getFileData(portfolioJsonFilePath))
+
+    portfolios = list()
+    for portfolioJson in portfoliosJson["portfolios"]:
+        portfolio = Portfolio()
+        portfolio.parse(portfolioJson)
+        portfolios.append(portfolio)
+
+    for portfolio in portfolios:
+        portfolio.print()
 
 def isCacheStale(currentEpoch, lastEpoch, cacheFreshSeconds):
     print( "Current Epoch:\t", currentEpoch)

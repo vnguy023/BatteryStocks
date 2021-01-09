@@ -21,3 +21,14 @@ def setLastUpdateEpochTime(value):
     epochFile = open(TEMP_EPOCH_FILE_PATH, "w")
     epochFile.write(str(value))
     epochFile.close
+
+def getFileData(filePath:str):
+    fp = os.path.join("", filePath)
+
+    if not os.path.isfile(fp):
+        return ""
+
+    file = open(fp)
+    data = file.read()
+
+    return data
