@@ -4,6 +4,7 @@ from portfolio.portfolio import Portfolio
 
 import stockinfo.stockinfo as si
 from stockinfo.ticker import Ticker
+from stockinfo.tickerCache import TickerCache
 
 from datetime import datetime
 import utils.utils as utils
@@ -39,6 +40,8 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
 
     for portfolio in portfolios:
         portfolio.print()
+
+    TickerCache.saveCache()
 
 def isCacheStale(currentEpoch, lastEpoch, cacheFreshSeconds):
     print( "Current Epoch:\t", currentEpoch)
