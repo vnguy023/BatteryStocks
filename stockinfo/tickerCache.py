@@ -1,4 +1,4 @@
-import os
+import json, os
 
 from stockinfo.ticker import Ticker
 from stockinfo import stockinfo
@@ -21,26 +21,25 @@ class TickerCache:
         if TickerCache._instance is None:
             TickerCache._instance = self
             self._cacheCurrentPrice = dict()
-
             self.loadCache()
 
     def getCurrentPrice(self, ticker: Ticker):
-        if not(ticker in self._cacheCurrentPrice):
-            self._cacheCurrentPrice[ticker] =  stockinfo.getLiveData(ticker)
-        return self._cacheCurrentPrice[ticker]
+        if not(ticker.symbol in self._cacheCurrentPrice):
+            self._cacheCurrentPrice[ticker.symbol] =  stockinfo.getLiveData(ticker)
+        return self._cacheCurrentPrice[ticker.symbol]
 
     def loadCache(self):
-        if ( not( os.path.isdir(TEMP_DIRECTORY_PATH) and os.path.isfile(TICKER_CACHE_FILENAME))):
+        if ( not( os.path.isdir(TEMP_DIRECTORY_PATH) and os.path.isfile(TICKER_CACHE_FILEPATH))):
             return
-
+        tickerCacheFile = open(TICKER_CACHE_FILEPATH)
+        self._cacheCurrentPrice = json.loads(tickerCacheFile.read())
+    
     @staticmethod
     def saveCache():
         instance = TickerCache.getInstance()
         instance._saveCache()
     
     def _saveCache(self):
-        value = "Hello World"
-
         tickerCacheFile = open(TICKER_CACHE_FILEPATH, "w")
-        tickerCacheFile.write(str(value))
+        tickerCacheFile.write(json.dumps(self._cacheCurrentPrice))
         tickerCacheFile.close
