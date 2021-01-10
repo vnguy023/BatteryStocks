@@ -35,8 +35,8 @@ def getFileData(filePath:str):
 
     return data
 
-def getStrOutput(key:str, value:str, rJustWidth: int, fillChar: str, textColor: TextColor = TextColor.CWHITE):
-    output = "[{key}:".format(key=key) + textColor +"{value}".format(key=key, value=value.rjust(rJustWidth, fillChar)) + TextColor.CEND + "]"
+def getStrOutput(key:str, value:str, rJustWidth: int, fillChar: str, defaultColor: TextColor = TextColor.CWHITE ,valueColor: TextColor = TextColor.CWHITE):
+    output = defaultColor + "[{key}:".format(key=key) + valueColor +"{value}".format(key=key, value=value.rjust(rJustWidth, fillChar)) + defaultColor + "]" + TextColor.CEND
     return output
 
 def getDecimalStr(number):
