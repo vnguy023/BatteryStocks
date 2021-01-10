@@ -32,4 +32,4 @@ class Portfolio:
             print("Ticker:", stock.ticker)
             
             for ledger in stock.ledgers:
-                ledger.print("\t")
+                ledger.print("    ")

@@ -1,4 +1,5 @@
 import utils.utils as utils
+from utils.textColor import TextColor
 
 class Ledger:
     def __init__(self, ticker: str, shares: float, pricePerShare: float):
@@ -18,7 +19,7 @@ class Ledger:
         return self.shares * self.pricePerShare
 
     def print(self, prependStr:str):
-        costBasis = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ')
+        costBasis = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', TextColor.CGREEN)
         shares = utils.getStrOutput("Shares", utils.getDecimalStr(self.shares), 8, ' ')
         pricePerShare = utils.getStrOutput("PricePerShare", utils.getDecimalStr(self.pricePerShare), 8, ' ')
         
