@@ -29,7 +29,6 @@ class Portfolio:
         print("////////////////////////////////////")
 
         for stock in self._stockDict.values():
-            print("Ticker:", stock.ticker)
-            
+            stock.print("")
             for ledger in stock.ledgers:
                 ledger.print("    ")
