@@ -36,3 +36,6 @@ def getFileData(filePath:str):
 def getStrOutput(key:str, value:str, rJustWidth: int, fillChar: str):
     output = "[{key}:{value}]".format(key=key, value=value.rjust(rJustWidth, fillChar))
     return output
+
+def getDecimalStr(number):
+    return '{0:,.2f}'.format(number)

@@ -18,9 +18,9 @@ class Ledger:
         return self.shares * self.pricePerShare
 
     def print(self, prependStr:str):
-        costBasis = utils.getStrOutput("CostBasis", str(self.getCostBasis()), 12, ' ')
-        shares = utils.getStrOutput("Shares", str(self.shares), 8, ' ')
-        pricePerShare = utils.getStrOutput("PricePerShare", str(self.pricePerShare), 8, ' ')
+        costBasis = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ')
+        shares = utils.getStrOutput("Shares", utils.getDecimalStr(self.shares), 8, ' ')
+        pricePerShare = utils.getStrOutput("PricePerShare", utils.getDecimalStr(self.pricePerShare), 8, ' ')
         
         output = prependStr + shares + " " + pricePerShare + " " + costBasis
         print(output)
