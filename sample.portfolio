@@ -3,12 +3,12 @@
         {
             "name": "My Portfolio",
             "ledgers": [
-                { "ticker": "AAPL"  , "shares": 244     , "pricePerShare": 38.56},
-                { "ticker": "NIO"   , "shares": 200     , "pricePerShare": 42.4},
-                { "ticker": "TSLA"  , "shares": 505     , "pricePerShare": 49.61},
-                { "ticker": "TSLA"  , "shares": 200     , "pricePerShare": 61.00},
-                { "ticker": "TSLA"  , "shares": 20      , "pricePerShare": 410.00},
-                { "ticker": "TSLA"  , "shares": 40      , "pricePerShare": 545.00}
+                { "ticker": "AAPL"  , "shares": 244     , "pricePaid": 38.56},
+                { "ticker": "NIO"   , "shares": 200     , "pricePaid": 42.4},
+                { "ticker": "TSLA"  , "shares": 505     , "pricePaid": 49.61},
+                { "ticker": "TSLA"  , "shares": 200     , "pricePaid": 61.00},
+                { "ticker": "TSLA"  , "shares": 20      , "pricePaid": 410.00},
+                { "ticker": "TSLA"  , "shares": 40      , "pricePaid": 545.00}
             ]
         }
     ]

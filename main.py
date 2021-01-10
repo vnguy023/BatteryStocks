@@ -3,6 +3,8 @@ import json, os, sys
 from portfolio.portfolio import Portfolio
 
 import stockinfo.stockinfo as si
+from stockinfo.ticker import Ticker
+
 from datetime import datetime
 import utils.utils as utils
 
@@ -18,7 +20,7 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
     print("***********************************")
     if isCacheStale(currentEpoch, lastEpoch, updateCacheAfterMinutes * MINUTES_TO_SECONDS):
         print("===Updating Data===")
-        ticker = 'TSLA'
+        ticker = Ticker("TSLA")
 
         print( si.getLiveData(ticker) )
 

@@ -3,8 +3,11 @@ from utils.textColor import TextColor
 
 from portfolio.ledger import Ledger
 
+from stockinfo.tickerCache import TickerCache
+from stockinfo.ticker import Ticker
+
 class Stock:
-    def __init__(self, ticker: str):
+    def __init__(self, ticker: Ticker):
         self.ticker = ticker
         self.ledgers = list()
 
@@ -23,14 +26,14 @@ class Stock:
             shares = shares + ledger.shares
         return shares
 
-    def getAvgPricePerShare(self):
+    def getAvgPricePaid(self):
         return self.getCostBasis() / self.getShares()
 
     def print(self, prependStr:str):
-        ticker = utils.getStrOutput("Ticker", self.ticker, 6, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CWHITE2)
+        ticker = utils.getStrOutput("Ticker", self.ticker.symbol, 6, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CWHITE2)
         costBasis = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CGREEN2)
         shares = utils.getStrOutput("Shares", utils.getDecimalStr(self.getShares()), 8, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CWHITE2)
-        pricePerShare = utils.getStrOutput("AvgPricePerShare", utils.getDecimalStr(self.getAvgPricePerShare()), 8, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CWHITE2)
+        avgPricePaid = utils.getStrOutput("avgPricePaid", utils.getDecimalStr(self.getAvgPricePaid()), 8, ' ', defaultColor=TextColor.CWHITE2, valueColor=TextColor.CWHITE2)
         
-        output = prependStr + ticker + " " + shares + " " + pricePerShare + " " + costBasis
+        output = prependStr + ticker + " " + shares + " " + avgPricePaid + " " + costBasis
         print(output)

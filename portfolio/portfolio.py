@@ -1,6 +1,8 @@
 from portfolio.stock import Stock
 from portfolio.ledger import Ledger
 
+from stockinfo.ticker import Ticker
+
 class Portfolio:
     def __init__(self):
         self._stockDict = dict()
@@ -11,7 +13,7 @@ class Portfolio:
         stock = self._stockDict.get(ledger.ticker)
         stock.addLedger(ledger)
 
-    def _addStock(self, ticker: str):
+    def _addStock(self, ticker: Ticker):
         if ticker in self._stockDict:
             return
         
