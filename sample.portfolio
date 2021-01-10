@@ -8,7 +8,8 @@
                 { "ticker": "TSLA"  , "shares": 505     , "pricePaid": 49.61},
                 { "ticker": "TSLA"  , "shares": 200     , "pricePaid": 61.00},
                 { "ticker": "TSLA"  , "shares": 20      , "pricePaid": 410.00},
-                { "ticker": "TSLA"  , "shares": 40      , "pricePaid": 545.00}
+                { "ticker": "TSLA"  , "shares": 40      , "pricePaid": 545.00},
+                { "ticker": "ZM"    , "shares": 25      , "pricePaid": 426.97}
             ]
         }
     ]

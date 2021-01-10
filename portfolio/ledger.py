@@ -21,14 +21,24 @@ class Ledger:
     def getCostBasis(self):
         return self.shares * self.pricePaid
 
+    def getMarketValue(self):
+        return self.getPrice() * self.shares
+
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
 
     def print(self, prependStr:str):
-        costBasis = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', defaultColor=TextColor.CGREY, valueColor=TextColor.CGREEN2)
-        shares = utils.getStrOutput("Shares", utils.getDecimalStr(self.shares), 8, ' ', defaultColor=TextColor.CGREY, valueColor=TextColor.CGREY)
-        price = utils.getStrOutput("Price", utils.getDecimalStr(self.getPrice()), 8, ' ', defaultColor=TextColor.CGREY, valueColor=TextColor.CGREEN)
-        pricePaid = utils.getStrOutput("PricePaid", utils.getDecimalStr(self.pricePaid), 8, ' ', defaultColor=TextColor.CGREY, valueColor=TextColor.CGREY)
+        defaultColor = TextColor.CGREY
+
+        marketValueColor = TextColor.CRED
+        if self.getMarketValue() > self.getCostBasis():
+            marketValueColor = TextColor.CGREEN
+
+        costBasisStr = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', defaultColor, defaultColor)
+        marketValueStr = utils.getStrOutput("MarketValue", utils.getDecimalStr(self.getMarketValue()), 12, ' ', defaultColor=TextColor.CGREY, valueColor=marketValueColor)
+        sharesStr = utils.getStrOutput("Shares", utils.getDecimalStr(self.shares), 8, ' ', defaultColor, defaultColor)
+        priceStr = utils.getStrOutput("Price", utils.getDecimalStr(self.getPrice()), 8, ' ', defaultColor, defaultColor)
+        pricePaidStr = utils.getStrOutput("PricePaid", utils.getDecimalStr(self.pricePaid), 8, ' ', defaultColor, defaultColor)
         
-        output = prependStr + price + " " + shares + " " + pricePaid + " " + costBasis
+        output = prependStr + priceStr + " " + marketValueStr + " " + sharesStr + " " + pricePaidStr + " " + costBasisStr
         print(output)
