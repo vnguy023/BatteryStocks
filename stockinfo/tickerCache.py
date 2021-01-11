@@ -35,6 +35,13 @@ class TickerCache:
         self._cacheCurrentPrice = json.loads(tickerCacheFile.read())
     
     @staticmethod
+    def clearCache():
+        TickerCache.getInstance()._clearCache()
+
+    def _clearCache(self):
+        self._cacheCurrentPrice = dict()
+
+    @staticmethod
     def saveCache():
         instance = TickerCache.getInstance()
         instance._saveCache()

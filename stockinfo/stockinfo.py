@@ -11,7 +11,7 @@ def getClosingPrice(ticker: Ticker, date):
     return data['close']
 
 def getLiveData(ticker: Ticker):
-    liveData = yf.download(tickers=ticker.symbol, period='1h', interval='15m', rounding=True)
+    liveData = yf.download(tickers=ticker.symbol, period='1h', interval='15m', rounding=False, progress=False)
 
     #print (liveData)
     return liveData['Close'].values[3]

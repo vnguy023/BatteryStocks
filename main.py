@@ -21,11 +21,8 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
     print("***********************************")
     if isCacheStale(currentEpoch, lastEpoch, updateCacheAfterMinutes * MINUTES_TO_SECONDS):
         print("===Updating Data===")
-        ticker = Ticker("TSLA")
-
-        print( si.getLiveData(ticker) )
-
         utils.setLastUpdateEpochTime(currentEpoch)
+        TickerCache.clearCache()
     else:
         print("===Using Cached Data===")
 
