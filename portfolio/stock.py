@@ -14,10 +14,6 @@ class Stock:
     def addLedger(self, ledger: Ledger):
         self.ledgers.append(ledger)
 
-
-    def getYesterdayClosingPrice(self):
-        return TickerCache.getInstance().getYesterdayClosingPrice(self.ticker)
-
     def getCostBasis(self):
         result = 0.00
         for ledger in self.ledgers:
@@ -38,6 +34,9 @@ class Stock:
 
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
+
+    def getYesterdayClosingPrice(self):
+        return TickerCache.getInstance().getYesterdayClosingPrice(self.ticker)
 
     @classmethod
     def printHeader(cls, prependStr):
@@ -60,7 +59,7 @@ class Stock:
             marketValueColor = TextColor.CGREEN
 
         priceValueColor = TextColor.CRED
-        if self.getPrice() > self.getYesterdayClosingPrice():
+        if self.getYesterdayClosingPrice() <= self.getPrice():
             priceValueColor = TextColor.CGREEN
 
         avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid())), defaultColor, defaultColor)

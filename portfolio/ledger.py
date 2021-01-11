@@ -27,6 +27,9 @@ class Ledger:
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
 
+    def getYesterdayClosingPrice(self):
+        return TickerCache.getInstance().getYesterdayClosingPrice(self.ticker)
+
     @classmethod
     def printHeader(cls, prependStr:str):
         defaultColor = TextColor.CGREY
@@ -46,10 +49,14 @@ class Ledger:
         if self.getMarketValue() > self.getCostBasis():
             marketValueColor = TextColor.CGREEN
 
+        priceValueColor = TextColor.CRED
+        if self.getYesterdayClosingPrice() <= self.getPrice():
+            priceValueColor = TextColor.CGREEN
+
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
         sharesStr = utils.getStrValueOutput("{:>8}".format(utils.getDecimalStr(self.shares)), defaultColor, defaultColor)
-        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, priceValueColor)
         pricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.pricePaid)), defaultColor, defaultColor)
         
         output = prependStr + priceStr + " " + marketValueStr + " " + sharesStr + " " + pricePaidStr + " " + costBasisStr

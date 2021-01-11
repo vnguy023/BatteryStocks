@@ -4,6 +4,8 @@ import yfinance as yf
 from stockinfo.ticker import Ticker
 
 def getYesterdayClosingPrice(ticker: Ticker):
+    #print("[Desc=Hitting Server] [getYesterdayClosingPrice] [Ticker={ticker}]".format(ticker=ticker.symbol))
+
     periodDays = 5
     currentTime = datetime.now()
     startDate = (currentTime - timedelta(days=periodDays)).strftime("%Y-%m-%d")
@@ -20,6 +22,8 @@ def getYesterdayClosingPrice(ticker: Ticker):
     return data['Close'].values[lastIndex]
 
 def getLiveData(ticker: Ticker):
+    #print("[Desc=Hitting Server] [getLiveData] [Ticker={ticker}]".format(ticker=ticker.symbol))
+    
     data = yf.download(tickers=ticker.symbol, period='1d', interval='1d', rounding=False, progress=False)
 
     lastIndex = len(data) - 1

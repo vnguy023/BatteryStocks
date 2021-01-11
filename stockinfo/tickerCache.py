@@ -20,29 +20,30 @@ class TickerCache:
     def __init__(self):
         if TickerCache._instance is None:
             TickerCache._instance = self
-            self._cacheCurrentPrice = dict()
-            self.loadCache()
+            self._cache = dict()
+            self._loadCache()
 
     def getYesterdayClosingPrice(self, ticker: Ticker):
-        return stockinfo.getYesterdayClosingPrice(ticker)
+        cache = self._cache[_Field.YESTERDAY_PRICE]
+
+        if not(ticker.symbol in cache):
+            cache[ticker.symbol] =  stockinfo.getYesterdayClosingPrice(ticker)
+        return cache[ticker.symbol]
 
     def getCurrentPrice(self, ticker: Ticker):
-        if not(ticker.symbol in self._cacheCurrentPrice):
-            self._cacheCurrentPrice[ticker.symbol] =  stockinfo.getLiveData(ticker)
-        return self._cacheCurrentPrice[ticker.symbol]
+        cache = self._cache[_Field.CURRENT_PRICE]
 
-    def loadCache(self):
-        if ( not( os.path.isdir(TEMP_DIRECTORY_PATH) and os.path.isfile(TICKER_CACHE_FILEPATH))):
-            return
-        tickerCacheFile = open(TICKER_CACHE_FILEPATH)
-        self._cacheCurrentPrice = json.loads(tickerCacheFile.read())
+        if not(ticker.symbol in cache):
+            cache[ticker.symbol] =  stockinfo.getLiveData(ticker)
+        return cache[ticker.symbol]
     
     @staticmethod
     def clearCache():
         TickerCache.getInstance()._clearCache()
 
     def _clearCache(self):
-        self._cacheCurrentPrice = dict()
+        self._cache = dict()
+        self._initCache()
 
     @staticmethod
     def saveCache():
@@ -51,5 +52,22 @@ class TickerCache:
     
     def _saveCache(self):
         tickerCacheFile = open(TICKER_CACHE_FILEPATH, "w")
-        tickerCacheFile.write(json.dumps(self._cacheCurrentPrice))
+        tickerCacheFile.write(json.dumps(self._cache, indent=2))
         tickerCacheFile.close
+
+    def _loadCache(self):
+        self._clearCache()
+        if ( not( os.path.isdir(TEMP_DIRECTORY_PATH) and os.path.isfile(TICKER_CACHE_FILEPATH))):
+            return False
+        
+        tickerCacheFile = open(TICKER_CACHE_FILEPATH)
+        self._cache = json.loads(tickerCacheFile.read())
+        return True
+    
+    def _initCache(self):
+        self._cache[_Field.CURRENT_PRICE] = dict()
+        self._cache[_Field.YESTERDAY_PRICE] = dict()
+
+class _Field:
+    CURRENT_PRICE = "CurrentPrice"
+    YESTERDAY_PRICE = "YesterdayPrice"
