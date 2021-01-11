@@ -1,17 +1,30 @@
+from datetime import datetime, timedelta
+
 import yfinance as yf
 from stockinfo.ticker import Ticker
 
-def getClosingPrice(ticker: Ticker, date):
-    tickerData = yf.Ticker(ticker.symbol)
-    # pulling historical data
-    startDate = "2018-01-07"
-    endDate = "2018-01-08"
+def getYesterdayClosingPrice(ticker: Ticker):
+    periodDays = 5
+    currentTime = datetime.now()
+    startDate = (currentTime - timedelta(days=periodDays)).strftime("%Y-%m-%d")
+    endDate = currentTime.strftime("%Y-%m-%d")
 
+    tickerData = yf.Ticker(ticker.symbol)
     data = tickerData.history(start=startDate, end=endDate)
-    return data['close']
+
+    lastIndex = len(data) - 1
+    if lastIndex < 0:
+        print("[Error=No Data] [Ticker={Ticker}]".format(Ticker=ticker.symbol))
+        return 0.00
+
+    return data['Close'].values[lastIndex]
 
 def getLiveData(ticker: Ticker):
-    liveData = yf.download(tickers=ticker.symbol, period='1h', interval='15m', rounding=False, progress=False)
+    data = yf.download(tickers=ticker.symbol, period='1d', interval='1d', rounding=False, progress=False)
 
-    #print (liveData)
-    return liveData['Close'].values[3]
+    lastIndex = len(data) - 1
+    if lastIndex < 0:
+        print("[Error=No Data] [Ticker={Ticker}]".format(Ticker=ticker.symbol))
+        return 0.00
+
+    return data['Close'].values[lastIndex]

@@ -14,17 +14,21 @@ class Stock:
     def addLedger(self, ledger: Ledger):
         self.ledgers.append(ledger)
 
+
+    def getYesterdayClosingPrice(self):
+        return TickerCache.getInstance().getYesterdayClosingPrice(self.ticker)
+
     def getCostBasis(self):
-        costBasis = 0.00
+        result = 0.00
         for ledger in self.ledgers:
-            costBasis = costBasis + ledger.getCostBasis()
-        return costBasis
+            result = result + ledger.getCostBasis()
+        return result
 
     def getShares(self):
-        shares = 0.00
+        result = 0.00
         for ledger in self.ledgers:
-            shares = shares + ledger.shares
-        return shares
+            result = result + ledger.shares
+        return result
 
     def getAvgPricePaid(self):
         return self.getCostBasis() / self.getShares()
@@ -39,11 +43,11 @@ class Stock:
     def printHeader(cls, prependStr):
         defaultColor = TextColor.CWHITE
         avgPricePaidStr = utils.getStrValueOutput("{:^14}".format("avgPricePaid"), defaultColor, defaultColor)
-        tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
-        sharesStr = utils.getStrValueOutput("{:^8}".format("Shares"), defaultColor, defaultColor)
         priceStr = utils.getStrValueOutput("{:^14}".format("Current Price"), defaultColor, defaultColor)
+        sharesStr = utils.getStrValueOutput("{:^8}".format("Shares"), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
         
         output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
         print(output)
@@ -55,12 +59,16 @@ class Stock:
         if self.getMarketValue() > self.getCostBasis():
             marketValueColor = TextColor.CGREEN
 
+        priceValueColor = TextColor.CRED
+        if self.getPrice() > self.getYesterdayClosingPrice():
+            priceValueColor = TextColor.CGREEN
+
         avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid())), defaultColor, defaultColor)
-        tickerStr = utils.getStrValueOutput("{:>6}".format(self.ticker.symbol), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, priceValueColor)
         sharesStr = utils.getStrValueOutput("{:>8}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
-        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:>6}".format(self.ticker.symbol), defaultColor, defaultColor)
         
         output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
         print(output)

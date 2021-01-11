@@ -23,6 +23,9 @@ class TickerCache:
             self._cacheCurrentPrice = dict()
             self.loadCache()
 
+    def getYesterdayClosingPrice(self, ticker: Ticker):
+        return stockinfo.getYesterdayClosingPrice(ticker)
+
     def getCurrentPrice(self, ticker: Ticker):
         if not(ticker.symbol in self._cacheCurrentPrice):
             self._cacheCurrentPrice[ticker.symbol] =  stockinfo.getLiveData(ticker)
