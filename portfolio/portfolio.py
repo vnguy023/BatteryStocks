@@ -59,7 +59,7 @@ class Portfolio:
     def printHeader(cls, prependStr: str):
         defaultColor = TextColor.CYELLOW
 
-        nameStr = utils.getStrValueOutput("{:<16}".format("Portfolio Name"), defaultColor, defaultColor)
+        nameStr = utils.getStrValueOutput("{:<24}".format("Portfolio Name"), defaultColor, defaultColor)
         portfolioValueStr = utils.getStrValueOutput("{:^16}".format("Portfolio Value"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^16}".format("CostBasis"), defaultColor, defaultColor)
 
@@ -73,7 +73,7 @@ class Portfolio:
         if self.getPortfolioValue() > self.getCostBasis():
             portfolioValueColor = TextColor.CGREEN
 
-        nameStr = utils.getStrValueOutput(" " + "{:15}".format(self.name), defaultColor, defaultColor)
+        nameStr = utils.getStrValueOutput(" " + "{:23}".format(self.name), defaultColor, defaultColor)
         portfolioValueStr = utils.getStrValueOutput("$" + "{:>15}".format(utils.getDecimalStr(self.getPortfolioValue())), defaultColor, portfolioValueColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>15}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
 
