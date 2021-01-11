@@ -27,6 +27,18 @@ class Ledger:
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
 
+    @classmethod
+    def printHeader(cls, prependStr:str):
+        defaultColor = TextColor.CGREY
+        pricePaidStr = utils.getStrValueOutput("{:^14}".format("PricePaid"), defaultColor, defaultColor)
+        costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
+        marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
+        sharesStr = utils.getStrValueOutput("{:^8}".format("Shares"), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("{:^14}".format("Current Price"), defaultColor, defaultColor)
+        
+        output = prependStr + priceStr + " " + marketValueStr + " " + sharesStr + " " + pricePaidStr + " " + costBasisStr
+        print(output)
+
     def print(self, prependStr:str):
         defaultColor = TextColor.CGREY
 
@@ -34,11 +46,11 @@ class Ledger:
         if self.getMarketValue() > self.getCostBasis():
             marketValueColor = TextColor.CGREEN
 
-        costBasisStr = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', defaultColor, defaultColor)
-        marketValueStr = utils.getStrOutput("MarketValue", utils.getDecimalStr(self.getMarketValue()), 12, ' ', defaultColor=TextColor.CGREY, valueColor=marketValueColor)
-        sharesStr = utils.getStrOutput("Shares", utils.getDecimalStr(self.shares), 8, ' ', defaultColor, defaultColor)
-        priceStr = utils.getStrOutput("Price", utils.getDecimalStr(self.getPrice()), 8, ' ', defaultColor, defaultColor)
-        pricePaidStr = utils.getStrOutput("PricePaid", utils.getDecimalStr(self.pricePaid), 8, ' ', defaultColor, defaultColor)
+        costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
+        marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
+        sharesStr = utils.getStrValueOutput("{:>8}".format(utils.getDecimalStr(self.shares)), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
+        pricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.pricePaid)), defaultColor, defaultColor)
         
         output = prependStr + priceStr + " " + marketValueStr + " " + sharesStr + " " + pricePaidStr + " " + costBasisStr
         print(output)

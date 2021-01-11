@@ -35,6 +35,19 @@ class Stock:
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
 
+    @classmethod
+    def printHeader(cls, prependStr):
+        defaultColor = TextColor.CWHITE
+        avgPricePaidStr = utils.getStrValueOutput("{:^14}".format("avgPricePaid"), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
+        costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
+        marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
+        sharesStr = utils.getStrValueOutput("{:^8}".format("Shares"), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("{:^14}".format("Current Price"), defaultColor, defaultColor)
+        
+        output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        print(output)
+
     def print(self, prependStr:str):
         defaultColor = TextColor.CWHITE
 
@@ -42,12 +55,12 @@ class Stock:
         if self.getMarketValue() > self.getCostBasis():
             marketValueColor = TextColor.CGREEN
 
-        avgPricePaidStr = utils.getStrOutput("avgPricePaid", utils.getDecimalStr(self.getAvgPricePaid()), 8, ' ', defaultColor, defaultColor)
-        tickerStr = utils.getStrOutput("Ticker", self.ticker.symbol, 6, ' ', defaultColor, TextColor.CWHITE2)
-        costBasisStr = utils.getStrOutput("CostBasis", utils.getDecimalStr(self.getCostBasis()), 12, ' ', defaultColor, defaultColor)
-        marketValueStr = utils.getStrOutput("MarketValue", utils.getDecimalStr(self.getMarketValue()), 12, ' ', defaultColor, valueColor=marketValueColor)
-        sharesStr = utils.getStrOutput("Shares", utils.getDecimalStr(self.getShares()), 8, ' ', defaultColor, defaultColor)
-        priceStr = utils.getStrOutput("Price", utils.getDecimalStr(self.getPrice()), 8, ' ', defaultColor, defaultColor)
+        avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid())), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:>6}".format(self.ticker.symbol), defaultColor, defaultColor)
+        costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
+        marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
+        sharesStr = utils.getStrValueOutput("{:>8}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
         
         output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
         print(output)
