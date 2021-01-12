@@ -39,13 +39,13 @@ class Stock:
         return self.getPrice() - self.getLastMonthClosingPrice()
 
     def getMarketValueLastMonth(self):
-        return self.shares * self.getLastMonthClosingPrice()
+        return self.getShares() * self.getLastMonthClosingPrice()
 
     def getMarketValueLastWeek(self):
-        return self.shares * self.getLastWeekClosingPrice()
+        return self.getShares() * self.getLastWeekClosingPrice()
 
     def getMarketValueYesterday(self):
-        return self.shares * self.getYesterdayClosingPrice()
+        return self.getShares() * self.getYesterdayClosingPrice()
 
     def getPrice(self):
         return TickerCache.getInstance().getCurrentPrice(self.ticker)
@@ -62,20 +62,43 @@ class Stock:
     def getYesterdayClosingPrice(self):
         return TickerCache.getInstance().getYesterdayClosingPrice(self.ticker)
 
+    def getTotalGain(self):
+        return self.getMarketValue() - self.getCostBasis()
+
+    def getDayGain(self):
+        return self.getMarketValue() - self.getMarketValueYesterday()
+
+    def getWeekGain(self):
+        return self.getMarketValue() - self.getMarketValueLastWeek()
+
+    def getMonthGain(self):
+        return self.getMarketValue() - self.getMarketValueLastMonth()
+
     @classmethod
     def printHeader(cls, prependStr):
         defaultColor = TextColor.CWHITE + TextColor.CBOLD
         avgPricePaidStr = utils.getStrValueOutput("{:^14}".format("avgPricePaid"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
-        dayChangeStr = utils.getStrValueOutput("{:^10}".format("DayChange"), defaultColor, defaultColor)
-        weekChangeStr = utils.getStrValueOutput("{:^10}".format("WeekChange"), defaultColor, defaultColor)
-        monthChangeStr = utils.getStrValueOutput("{:^10}".format("MonthChange"), defaultColor, defaultColor)
+        dayChangeStr = utils.getStrValueOutput("{:^20}".format("DayChange"), defaultColor, defaultColor)
+        weekChangeStr = utils.getStrValueOutput("{:^20}".format("WeekChange"), defaultColor, defaultColor)
+        monthChangeStr = utils.getStrValueOutput("{:^20}".format("MonthChange"), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
-        priceStr = utils.getStrValueOutput("{:^14}".format("CurrentPrice"), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("{:^9}".format("Price"), defaultColor, defaultColor)
         sharesStr = utils.getStrValueOutput("{:^10}".format("Shares"), defaultColor, defaultColor)
         tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
+
+        totalGainStr = utils.getStrValueOutput("{:^26}".format("TotalGain"), defaultColor, defaultColor)
+        dayGainStr = utils.getStrValueOutput("{:^14}".format("DayGain"), defaultColor, defaultColor)
+        weekGainStr = utils.getStrValueOutput("{:^14}".format("WeekGain"), defaultColor, defaultColor)
+        monthGainStr = utils.getStrValueOutput("{:^14}".format("MonthGain"), defaultColor, defaultColor)
         
-        output = prependStr + tickerStr + " " + priceStr + " " + dayChangeStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = prependStr + tickerStr + " " + priceStr + " "
+        output = output + dayChangeStr + " " + dayGainStr + " " 
+        output = output + weekChangeStr + " " + weekGainStr + " " 
+        output = output + monthChangeStr + " " + monthGainStr + " " 
+        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = output + marketValueStr + " " + totalGainStr + " " 
+
         print(output)
 
     def print(self, prependStr:str):
@@ -86,26 +109,68 @@ class Stock:
             marketValueColor = TextColor.CGREEN
 
         dayChangeColor = TextColor.CRED
-        if self.getYesterdayClosingPrice() <= self.getPrice():
+        if self.getDayChange() > 0:
             dayChangeColor = TextColor.CGREEN
 
         weekChangeColor = TextColor.CRED
-        if self.getYesterdayClosingPrice() <= self.getPrice():
+        if self.getWeekChange() > 0:
             weekChangeColor = TextColor.CGREEN
-            
+
         monthChangeColor = TextColor.CRED
-        if self.getYesterdayClosingPrice() <= self.getPrice():
+        if self.getMonthChange() > 0:
             monthChangeColor = TextColor.CGREEN
+
+        totalGainColor = TextColor.CRED
+        if self.getTotalGain() > 0:
+            totalGainColor = TextColor.CGREEN
+
+        dayGainColor = TextColor.CRED
+        if self.getDayGain() > 0:
+            dayGainColor = TextColor.CGREEN
+
+        weekGainColor = TextColor.CRED
+        if self.getWeekGain() > 0:
+            weekGainColor = TextColor.CGREEN
+
+        monthGainColor = TextColor.CRED
+        if self.getMonthGain() > 0:
+            monthGainColor = TextColor.CGREEN
 
         avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid())), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
-        dayChangeStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getDayChange())), defaultColor, dayChangeColor)
-        weekChangeStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getWeekChange())), defaultColor, weekChangeColor)
-        monthChangeStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getMonthChange())), defaultColor, monthChangeColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
-        priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>8}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
         sharesStr = utils.getStrValueOutput("{:>10}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
         tickerStr = utils.getStrValueOutput("{:6}".format(self.ticker.symbol), defaultColor, defaultColor)
+
+        dayChangeStr1 = "$" + "{:>11}".format(utils.getDecimalStr(self.getDayChange()))
+        dayChangeStr2 = "{:>8}".format("  " + utils.getDecimalStr(self.getDayChange()/ self.getYesterdayClosingPrice() * 100) + "%")
+        dayChangeStr = utils.getStrValueOutput(dayChangeStr1 + dayChangeStr2, defaultColor, dayChangeColor)
+
+        dayChangeStr1 = "$" + "{:>11}".format(utils.getDecimalStr(self.getDayChange()))
+        dayChangeStr2 = "{:>8}".format("  " + utils.getDecimalStr(self.getDayChange()/ self.getYesterdayClosingPrice() * 100) + "%")
+        dayChangeStr = utils.getStrValueOutput(dayChangeStr1 + dayChangeStr2, defaultColor, dayChangeColor)
+
+        weekChangeStr1 = "$" + "{:>11}".format(utils.getDecimalStr(self.getWeekChange()))
+        weekChangeStr2 = "{:>8}".format("  " + utils.getDecimalStr(self.getWeekChange()/ self.getLastWeekClosingPrice() * 100) + "%")
+        weekChangeStr = utils.getStrValueOutput(weekChangeStr1 + weekChangeStr2, defaultColor, weekChangeColor)
+
+        monthChangeStr1 = "$" + "{:>11}".format(utils.getDecimalStr(self.getMonthChange()))
+        monthChangeStr2 = "{:>8}".format("  " + utils.getDecimalStr(self.getMonthChange()/ self.getLastMonthClosingPrice() * 100) + "%")
+        monthChangeStr = utils.getStrValueOutput(monthChangeStr1 + monthChangeStr2, defaultColor, monthChangeColor)
+
+        totalGainStr1 = "$" + "{:>13}".format(utils.getDecimalStr(self.getTotalGain()))
+        totalGainStr2 = "{:>12}".format("  " + utils.getDecimalStr(self.getTotalGain()/ self.getCostBasis() * 100) + "%")
+        totalGainStr = utils.getStrValueOutput(totalGainStr1 + totalGainStr2, defaultColor, totalGainColor)
+
+        dayGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getDayGain())), defaultColor, dayGainColor)
+        weekGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getWeekGain())), defaultColor, weekGainColor)
+        monthGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMonthGain())), defaultColor, monthGainColor)
         
-        output = prependStr + tickerStr + " " + priceStr + " " + dayChangeStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = prependStr + tickerStr + " " + priceStr + " "
+        output = output + dayChangeStr + " " + dayGainStr + " " 
+        output = output + weekChangeStr + " " + weekGainStr + " " 
+        output = output + monthChangeStr + " " + monthGainStr + " " 
+        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = output + marketValueStr + " " + totalGainStr + " " 
         print(output)
