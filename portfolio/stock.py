@@ -14,6 +14,9 @@ class Stock:
     def addLedger(self, ledger: Ledger):
         self.ledgers.append(ledger)
 
+    def getAvgPricePaid(self):
+        return self.getCostBasis() / self.getShares()
+
     def getCostBasis(self):
         result = 0.00
         for ledger in self.ledgers:
@@ -25,9 +28,6 @@ class Stock:
         for ledger in self.ledgers:
             result = result + ledger.shares
         return result
-
-    def getAvgPricePaid(self):
-        return self.getCostBasis() / self.getShares()
 
     def getMarketValue(self):
         return self.getPrice() * self.getShares()

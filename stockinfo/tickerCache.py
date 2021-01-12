@@ -23,18 +23,32 @@ class TickerCache:
             self._cache = dict()
             self._loadCache()
 
-    def getYesterdayClosingPrice(self, ticker: Ticker):
-        cache = self._cache[_Field.YESTERDAY_PRICE]
-
-        if not(ticker.symbol in cache):
-            cache[ticker.symbol] =  stockinfo.getYesterdayClosingPrice(ticker)
-        return cache[ticker.symbol]
-
     def getCurrentPrice(self, ticker: Ticker):
         cache = self._cache[_Field.CURRENT_PRICE]
 
         if not(ticker.symbol in cache):
             cache[ticker.symbol] =  stockinfo.getLiveData(ticker)
+        return cache[ticker.symbol]
+
+    def getLastMonthClosingPrice(self, ticker: Ticker):
+        cache = self._cache[_Field.LASTMONTH_PRICE]
+
+        if not(ticker.symbol in cache):
+            cache[ticker.symbol] =  stockinfo.getLastMonthClosingPrice(ticker)
+        return cache[ticker.symbol]
+
+    def getLastWeekClosingPrice(self, ticker: Ticker):
+        cache = self._cache[_Field.LASTWEEK_PRICE]
+
+        if not(ticker.symbol in cache):
+            cache[ticker.symbol] =  stockinfo.getLastWeekClosingPrice(ticker)
+        return cache[ticker.symbol]
+
+    def getYesterdayClosingPrice(self, ticker: Ticker):
+        cache = self._cache[_Field.YESTERDAY_PRICE]
+
+        if not(ticker.symbol in cache):
+            cache[ticker.symbol] =  stockinfo.getYesterdayClosingPrice(ticker)
         return cache[ticker.symbol]
     
     @staticmethod
@@ -66,8 +80,13 @@ class TickerCache:
     
     def _initCache(self):
         self._cache[_Field.CURRENT_PRICE] = dict()
+        self._cache[_Field.LASTMONTH_PRICE] = dict()
+        self._cache[_Field.LASTWEEK_PRICE] = dict()
         self._cache[_Field.YESTERDAY_PRICE] = dict()
+        
 
 class _Field:
     CURRENT_PRICE = "CurrentPrice"
+    LASTMONTH_PRICE = "LastMonthPrice"
+    LASTWEEK_PRICE = "LastWeekPrice"
     YESTERDAY_PRICE = "YesterdayPrice"
