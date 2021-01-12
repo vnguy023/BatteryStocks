@@ -4,10 +4,29 @@ import pytz
 import yfinance as yf
 from stockinfo.ticker import Ticker
 
+class StockInfo: 
+    _instance = None
+
+    @staticmethod
+    def getInstance():
+        if StockInfo._instance == None:
+            StockInfo()
+        return StockInfo._instance
+
+    def __init__(self):
+        if StockInfo._instance is None:
+            StockInfo._instance = self
+            self._tickerData = dict()
+
+    def getTickerData(self, ticker: Ticker):
+        if not (ticker in self._tickerData):
+            self._tickerData[ticker] = yf.Ticker(ticker.symbol)
+        return self._tickerData[ticker]
+
 def getYesterdayClosingPrice(ticker: Ticker):
     #print("[Desc=Hitting Server] [getYesterdayClosingPrice] [Ticker={ticker}]".format(ticker=ticker.symbol))
 
-    tickerData = yf.Ticker(ticker.symbol)
+    tickerData = StockInfo.getInstance().getTickerData(ticker)
     return float(tickerData.info['previousClose'])
 
 def getLastMonthClosingPrice(ticker: Ticker):
@@ -18,7 +37,7 @@ def getLastMonthClosingPrice(ticker: Ticker):
     startDate = (currentTime - timedelta(days=periodDays)).strftime("%Y-%m-%d")
     endDate = (currentTime - timedelta(days=periodDays - 25)).strftime("%Y-%m-%d")
 
-    tickerData = yf.Ticker(ticker.symbol)
+    tickerData = StockInfo.getInstance().getTickerData(ticker)
     data = tickerData.history(start=startDate, end=endDate)
 
     index = 0
@@ -36,7 +55,7 @@ def getLastWeekClosingPrice(ticker: Ticker):
     startDate = (currentTime - timedelta(days=periodDays)).strftime("%Y-%m-%d")
     endDate = currentTime.strftime("%Y-%m-%d")
 
-    tickerData = yf.Ticker(ticker.symbol)
+    tickerData = StockInfo.getInstance().getTickerData(ticker)
     data = tickerData.history(start=startDate, end=endDate)
 
     index = 0
