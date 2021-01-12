@@ -7,6 +7,7 @@ from stockinfo.ticker import Ticker
 from stockinfo.tickerCache import TickerCache
 
 from datetime import datetime
+import pytz
 import utils.utils as utils
 
 MINUTES_TO_SECONDS = 60
@@ -16,8 +17,11 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
     currentEpoch = int(currentTime.timestamp())
     lastEpoch = utils.getLastUpdateEpochTime()
     
-    print( "Current Time:\t", currentTime.strftime("%Y-%m-%d %H:%M") )
+    currentTimeEST = datetime.now(pytz.timezone('US/Eastern'))
+    currentTime = datetime.now()
 
+    print( "Local Time:\t", currentTime.strftime("%Y-%m-%d %I:%M %p, %A") )
+    print( "EST Time:\t", currentTimeEST.strftime("%Y-%m-%d %I:%M %p, %A") )
     print("***********************************")
     if isCacheStale(currentEpoch, lastEpoch, updateCacheAfterMinutes * MINUTES_TO_SECONDS):
         print("===Updating Data===")
