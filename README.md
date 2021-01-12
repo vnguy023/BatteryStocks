@@ -23,7 +23,7 @@ Sample Portfolio Hiding Ledgers
 1) Create your own '*.portfolio' file following the sample.portfolio
 2) Open terminal to location of 'main.py'
 3) run python program with your portfolio file as an argument to main.py
-   - EX: python3 main.py sample.portfolio
+   - EX: python main.py sample.portfolio
 
 # Officially Supported Platforms
 
