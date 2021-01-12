@@ -30,10 +30,40 @@ class Portfolio:
         return costBasis
 
     def getPortfolioValue(self):
-        portfolioValue = 0.00
+        result = 0.00
         for value in self._stockDict.values():
-            portfolioValue = portfolioValue + value.getMarketValue()
-        return portfolioValue
+            result = result + value.getMarketValue()
+        return result
+
+    def getMarketValueYesterday(self):
+        result = 0.00
+        for value in self._stockDict.values():
+            result = result + value.getMarketValueYesterday()
+        return result
+
+    def getMarketValueLastWeek(self):
+        result = 0.00
+        for value in self._stockDict.values():
+            result = result + value.getMarketValueLastWeek()
+        return result
+
+    def getMarketValueLastMonth(self):
+        result = 0.00
+        for value in self._stockDict.values():
+            result = result + value.getMarketValueLastMonth()
+        return result
+
+    def getTotalGain(self):
+        return self.getPortfolioValue() - self.getCostBasis()
+
+    def getDayGain(self):
+        return self.getPortfolioValue() - self.getMarketValueYesterday()
+
+    def getWeekGain(self):
+        return self.getPortfolioValue() - self.getMarketValueLastWeek()
+
+    def getMonthGain(self):
+        return self.getPortfolioValue() - self.getMarketValueLastMonth()
 
 
     def parse(self, portfolioDict):
@@ -66,7 +96,12 @@ class Portfolio:
         portfolioValueStr = utils.getStrValueOutput("{:^16}".format("Portfolio Value"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^16}".format("CostBasis"), defaultColor, defaultColor)
 
-        output = prependStr + nameStr + " " + portfolioValueStr + " " + costBasisStr + " "
+        dayGainStr = utils.getStrValueOutput("{:^14}".format("DayGain"), defaultColor, defaultColor)
+        weekGainStr = utils.getStrValueOutput("{:^14}".format("WeekGain"), defaultColor, defaultColor)
+        monthGainStr = utils.getStrValueOutput("{:^14}".format("MonthGain"), defaultColor, defaultColor)
+        totalGainStr = utils.getStrValueOutput("{:^26}".format("TotalGain"), defaultColor, defaultColor)
+
+        output = prependStr + nameStr + " " + portfolioValueStr + " " + totalGainStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " "
         print(output)
 
     def _print(self, prependStr: str):
@@ -76,9 +111,33 @@ class Portfolio:
         if self.getPortfolioValue() > self.getCostBasis():
             portfolioValueColor = TextColor.CGREEN
 
+        totalGainColor = TextColor.CRED
+        if self.getTotalGain() > 0:
+            totalGainColor = TextColor.CGREEN
+
+        dayGainColor = TextColor.CRED
+        if self.getDayGain() > 0:
+            dayGainColor = TextColor.CGREEN
+
+        weekGainColor = TextColor.CRED
+        if self.getWeekGain() > 0:
+            weekGainColor = TextColor.CGREEN
+
+        monthGainColor = TextColor.CRED
+        if self.getMonthGain() > 0:
+            monthGainColor = TextColor.CGREEN
+
         nameStr = utils.getStrValueOutput(" " + "{:23}".format(self.name), defaultColor, defaultColor)
         portfolioValueStr = utils.getStrValueOutput("$" + "{:>15}".format(utils.getDecimalStr(self.getPortfolioValue())), defaultColor, portfolioValueColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>15}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
 
-        output = prependStr + nameStr + " " + portfolioValueStr + " " + costBasisStr + " "
+        totalGainStr1 = "$" + "{:>13}".format(utils.getDecimalStr(self.getTotalGain()))
+        totalGainStr2 = "{:>12}".format("  " + utils.getDecimalStr(self.getTotalGain()/ self.getCostBasis() * 100) + "%")
+        totalGainStr = utils.getStrValueOutput(totalGainStr1 + totalGainStr2, defaultColor, totalGainColor)
+
+        dayGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getDayGain())), defaultColor, dayGainColor)
+        weekGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getWeekGain())), defaultColor, weekGainColor)
+        monthGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMonthGain())), defaultColor, monthGainColor)
+
+        output = prependStr + nameStr + " " + portfolioValueStr + " " + totalGainStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " "
         print(output)
