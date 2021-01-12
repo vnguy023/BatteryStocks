@@ -23,3 +23,15 @@ Calculates current stock portfolio networth
 # Officially Supported Platforms
 
 Windows 10
+
+# Links
+
+- Source Code: https://github.com/vnguy023/BatteryStocks
+
+# Information
+    
+Author: Vincent Nguyen
+
+# Disclaimer
+
+Use at your own risk. I am not responsible for any damage(s) that can occur from running this
