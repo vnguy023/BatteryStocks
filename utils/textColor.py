@@ -1,6 +1,7 @@
 class TextColor:
     CEND      = '\33[0m'
     CBOLD     = '\33[1m'
+    CDIM      = '\x1b[2m'
     CITALIC   = '\33[3m'
     CURL      = '\33[4m'
     CBLINK    = '\33[5m'

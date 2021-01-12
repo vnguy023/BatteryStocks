@@ -40,12 +40,12 @@ class Stock:
 
     @classmethod
     def printHeader(cls, prependStr):
-        defaultColor = TextColor.CWHITE
+        defaultColor = TextColor.CWHITE + TextColor.CBOLD
         avgPricePaidStr = utils.getStrValueOutput("{:^14}".format("avgPricePaid"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
         priceStr = utils.getStrValueOutput("{:^14}".format("Current Price"), defaultColor, defaultColor)
-        sharesStr = utils.getStrValueOutput("{:^8}".format("Shares"), defaultColor, defaultColor)
+        sharesStr = utils.getStrValueOutput("{:^10}".format("Shares"), defaultColor, defaultColor)
         tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
         
         output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
@@ -66,8 +66,8 @@ class Stock:
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
         priceStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getPrice())), defaultColor, priceValueColor)
-        sharesStr = utils.getStrValueOutput("{:>8}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
-        tickerStr = utils.getStrValueOutput("{:>6}".format(self.ticker.symbol), defaultColor, defaultColor)
+        sharesStr = utils.getStrValueOutput("{:>10}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:6}".format(self.ticker.symbol), defaultColor, defaultColor)
         
         output = prependStr + tickerStr + " " + priceStr + " " + marketValueStr + " " + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
         print(output)

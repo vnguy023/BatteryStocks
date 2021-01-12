@@ -43,9 +43,6 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
     TickerCache.saveCache()
 
 def isCacheStale(currentEpoch, lastEpoch, cacheFreshSeconds):
-    print( "Current Epoch:\t", currentEpoch)
-    print( "Last Epoch:\t", lastEpoch)
-
     if currentEpoch < lastEpoch:
         return False
     elif (currentEpoch - lastEpoch) < cacheFreshSeconds:
