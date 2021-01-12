@@ -75,7 +75,7 @@ class Ledger:
         sharesStr = utils.getStrValueOutput("{:^10}".format("Shares"), defaultColor, defaultColor)
         pricePaidStr = utils.getStrValueOutput("{:^14}".format("PricePaid"), defaultColor, defaultColor)
 
-        totalGainStr = utils.getStrValueOutput("{:^14}".format("TotalGain"), defaultColor, defaultColor)
+        totalGainStr = utils.getStrValueOutput("{:^26}".format("TotalGain"), defaultColor, defaultColor)
         dayGainStr = utils.getStrValueOutput("{:^14}".format("DayGain"), defaultColor, defaultColor)
         weekGainStr = utils.getStrValueOutput("{:^14}".format("WeekGain"), defaultColor, defaultColor)
         monthGainStr = utils.getStrValueOutput("{:^14}".format("MonthGain"), defaultColor, defaultColor)
@@ -112,7 +112,10 @@ class Ledger:
         sharesStr = utils.getStrValueOutput("{:>10}".format(utils.getDecimalStr(self.shares)), defaultColor, defaultColor)
         pricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.pricePaid)), defaultColor, defaultColor)
         
-        totalGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getTotalGain())), defaultColor, totalGainColor) 
+        totalGainStr1 = "$" + "{:>13}".format(utils.getDecimalStr(self.getTotalGain()))
+        totalGainStr2 = "{:>12}".format("  " + utils.getDecimalStr(self.getTotalGain()/ self.getCostBasis() * 100) + "%")
+        totalGainStr = utils.getStrValueOutput(totalGainStr1 + totalGainStr2, defaultColor, totalGainColor)
+
         dayGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getDayGain())), defaultColor, dayGainColor)
         weekGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getWeekGain())), defaultColor, weekGainColor)
         monthGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMonthGain())), defaultColor, monthGainColor)
