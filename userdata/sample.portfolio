@@ -2,6 +2,7 @@
     "portfolios": [
         {
             "name": "Sample Portfolio",
+            "hideLedgers": false,
             "ledgers": [
                 { "ticker": "AAPL"  , "shares": 244     , "pricePaid": 38.56},
                 { "ticker": "NIO"   , "shares": 200     , "pricePaid": 42.4},

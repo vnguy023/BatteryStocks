@@ -10,6 +10,7 @@ class Portfolio:
     def __init__(self):
         self._stockDict = dict()
         self.name = ""
+        self.hideLedgers = True
 
     def addLedger(self, ledger: Ledger):
         self._addStock(ledger.ticker)
@@ -37,6 +38,7 @@ class Portfolio:
 
     def parse(self, portfolioDict):
         self.name = portfolioDict['name']
+        self.hideLedgers = portfolioDict['hideLedgers']
 
         for ledgerEntry in portfolioDict['ledgers']:
             self.addLedger(Ledger.parse(ledgerEntry))
@@ -51,9 +53,10 @@ class Portfolio:
         for stock in self._stockDict.values():
             stock.print(stockPrependStr)
 
-            Ledger.printHeader(ledgerPrependStr)
-            for ledger in stock.ledgers:
-                ledger.print(ledgerPrependStr)
+            if not self.hideLedgers:
+                Ledger.printHeader(ledgerPrependStr)
+                for ledger in stock.ledgers:
+                    ledger.print(ledgerPrependStr)
 
     @classmethod
     def printHeader(cls, prependStr: str):
