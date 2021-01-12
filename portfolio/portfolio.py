@@ -101,7 +101,7 @@ class Portfolio:
         monthGainStr = utils.getStrValueOutput("{:^14}".format("MonthGain"), defaultColor, defaultColor)
         totalGainStr = utils.getStrValueOutput("{:^26}".format("TotalGain"), defaultColor, defaultColor)
 
-        output = prependStr + nameStr + " " + portfolioValueStr + " " + totalGainStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " "
+        output = prependStr + nameStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " " + totalGainStr + " " + portfolioValueStr + " "
         print(output)
 
     def _print(self, prependStr: str):
@@ -139,5 +139,5 @@ class Portfolio:
         weekGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getWeekGain())), defaultColor, weekGainColor)
         monthGainStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMonthGain())), defaultColor, monthGainColor)
 
-        output = prependStr + nameStr + " " + portfolioValueStr + " " + totalGainStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " "
+        output = prependStr + nameStr + " " + dayGainStr + " " + weekGainStr + " " + monthGainStr + " " + costBasisStr + " " + totalGainStr + " " + portfolioValueStr + " "
         print(output)

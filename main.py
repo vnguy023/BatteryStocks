@@ -40,8 +40,8 @@ def main(portfolioJsonFilePath, updateCacheAfterMinutes):
         portfolios.append(portfolio)
 
     portfolioPrependStr = ""
-    Portfolio.printHeader(portfolioPrependStr)
     for portfolio in portfolios:
+        Portfolio.printHeader(portfolioPrependStr)
         portfolio.print(portfolioPrependStr)
 
     TickerCache.saveCache()
