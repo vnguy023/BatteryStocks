@@ -79,15 +79,25 @@ class Portfolio:
         
         self._print(prependStr)
 
+
+        stockSeperator = 0
+        stockSeperatorStr = stockPrependStr
+        for i in range(200):
+            stockSeperatorStr = stockSeperatorStr + "="
         Stock.printHeader(stockPrependStr)
         for stock in self._stockDict.values():
             stock.print(stockPrependStr)
-
+            
+            stockSeperator = stockSeperator + 1
+            if stockSeperator > 5:
+                stockSeperator = 0
+                print(stockSeperatorStr)
+                
             if not self.hideLedgers:
                 Ledger.printHeader(ledgerPrependStr)
                 for ledger in stock.ledgers:
                     ledger.print(ledgerPrependStr)
-
+            
     @classmethod
     def printHeader(cls, prependStr: str):
         defaultColor = TextColor.CYELLOW + TextColor.CBOLD
