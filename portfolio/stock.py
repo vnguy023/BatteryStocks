@@ -80,9 +80,9 @@ class Stock:
         avgPricePaidStr = utils.getStrValueOutput("{:^14}".format("avgPricePaid"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^14}".format("CostBasis"), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("{:^14}".format("MarketValue"), defaultColor, defaultColor)
-        priceStr = utils.getStrValueOutput("{:^9}".format("Price"), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("{:^10}".format("Price"), defaultColor, defaultColor)
         sharesStr = utils.getStrValueOutput("{:^10}".format("Shares"), defaultColor, defaultColor)
-        tickerStr = utils.getStrValueOutput("{:^6}".format("Ticker"), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:^8}".format("Ticker"), defaultColor, defaultColor)
 
         dayChangeStr = utils.getStrValueOutput("{:^21}".format("DayChange"), defaultColor, defaultColor)
         weekChangeStr = utils.getStrValueOutput("{:^21}".format("WeekChange"), defaultColor, defaultColor)
@@ -140,9 +140,9 @@ class Stock:
         avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid())), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
-        priceStr = utils.getStrValueOutput("$" + "{:>8}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
+        priceStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
         sharesStr = utils.getStrValueOutput("{:>10}".format(utils.getDecimalStr(self.getShares())), defaultColor, defaultColor)
-        tickerStr = utils.getStrValueOutput("{:6}".format(self.ticker.symbol), defaultColor, defaultColor)
+        tickerStr = utils.getStrValueOutput("{:8}".format(self.ticker.symbol), defaultColor, defaultColor)
 
         dayChangeStr1 = "$" + "{:>11}".format(utils.getDecimalStr(self.getDayChange()))
         dayChangeStr2 = "{:>9}".format("  " + utils.getDecimalStr(self.getDayChange()/ self.getYesterdayClosingPrice() * 100) + "%")

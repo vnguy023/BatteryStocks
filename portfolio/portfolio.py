@@ -102,7 +102,7 @@ class Portfolio:
     def printHeader(cls, prependStr: str):
         defaultColor = TextColor.CYELLOW + TextColor.CBOLD
 
-        nameStr = utils.getStrValueOutput("{:<24}".format("Portfolio Name"), defaultColor, defaultColor)
+        nameStr = utils.getStrValueOutput("{:^24}".format("Portfolio Name"), defaultColor, defaultColor)
         portfolioValueStr = utils.getStrValueOutput("{:^16}".format("Portfolio Value"), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("{:^16}".format("CostBasis"), defaultColor, defaultColor)
 
