@@ -43,5 +43,5 @@ def getStrKeyValueOutput(key:str, value:str, defaultColor: TextColor = TextColor
     output = defaultColor + "[{key}:".format(key=key) + valueColor +"{value}".format(key=key, value=value) + defaultColor + "]" + TextColor.CEND
     return output
 
-def getDecimalStr(number):
-    return '{0:,.2f}'.format(number)
+def getDecimalStr(number, digitsAfterDecimal: int = 2):
+    return ('{0:,.' + str(digitsAfterDecimal) + 'f}').format(number)
