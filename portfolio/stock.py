@@ -97,7 +97,7 @@ class Stock:
         output = output + dayChangeStr + " " + dayGainStr + " " 
         output = output + weekChangeStr + " " + weekGainStr + " " 
         output = output + monthChangeStr + " " + monthGainStr + " " 
-        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr + " "
         output = output + marketValueStr + " " + totalGainStr + " " 
 
         print(output)
@@ -142,7 +142,7 @@ class Stock:
             avgPricePaidStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getAvgPricePaid(), 4)), defaultColor, defaultColor)
         costBasisStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getCostBasis())), defaultColor, defaultColor)
         marketValueStr = utils.getStrValueOutput("$" + "{:>13}".format(utils.getDecimalStr(self.getMarketValue())), defaultColor, marketValueColor)
-        
+
         priceStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getPrice())), defaultColor, defaultColor)
         if self.getPrice() < 1.0:
             priceStr = utils.getStrValueOutput("$" + "{:>9}".format(utils.getDecimalStr(self.getPrice(), 4)), defaultColor, defaultColor)
@@ -181,6 +181,6 @@ class Stock:
         output = output + dayChangeStr + " " + dayGainStr + " " 
         output = output + weekChangeStr + " " + weekGainStr + " " 
         output = output + monthChangeStr + " " + monthGainStr + " " 
-        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr
+        output = output + sharesStr + " " + avgPricePaidStr + " " + costBasisStr + " "
         output = output + marketValueStr + " " + totalGainStr + " " 
         print(output)
